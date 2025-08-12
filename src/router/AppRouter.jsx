@@ -1,8 +1,11 @@
 import { Routes, Route, Navigate } from "react-router";
-import Home from "./components/Home";
-import About from "./components/About";
-import Dashboard from "./components/Dashboard";
-import NotFound from "./components/NotFound";
+import Home from "../components/Home";
+import About from "../components/About";
+import Dashboard from "../components/Dashboard";
+import NotFound from "../components/NotFound";
+import Profile from "../components/Profile";
+import ProfileSelector from "../components/ProfileSelector";
+import Employee from "../components/Employee";
 
 const AppRouter = () => {
   return (
@@ -13,12 +16,24 @@ const AppRouter = () => {
       <Route path="/empleados" element={<h1>Empleados</h1>} />
       <Route path="/About" element={<About/>} />
 
-      {/* Nested Routes */}
-      <Route path="/dashboard" element={<Dashboard/>} >
+      {/* Nested User Routes */}
+      <Route path="/user-dashboard" element={<Dashboard type={"user"}/>} >
         <Route path='users' element={<h1>Users</h1>}/>
         <Route path='settings' element={<h1>Settings</h1>}/>
       </Route>
+
+      {/* TODO: REMOVER */}
+      <Route path="/employees-dashboard" element={<Dashboard type={"employee"}/>} >
+        <Route path='employees' element={<h1>Users</h1>}/>
+        <Route path='settings' element={<h1>Settings</h1>}/>
+      </Route>
       
+      {/* Dinamic Routes */}
+      <Route path="/profile/:id" element={ <Profile/> } />
+      <Route path="/employee/:id" element={ <Employee/> } />
+
+      <Route path="/profiles" element={ <ProfileSelector/> } />
+
       {/* Redirects */}
       <Route path="not-found" element={<NotFound/>}/>
       <Route path="*" element={<Navigate to="/not-found" replace />}/>

@@ -1,6 +1,6 @@
 import { Link, Outlet } from "react-router";
 
-const Dashboard = () => {
+const Dashboard = ({ type }) => {
   return (
     <div>
       <div>
