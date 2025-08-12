@@ -1,9 +1,13 @@
+import AppRouter from "./Router/AppRouter";
+
 function App() {
   return (
     <>
-      <p className="text-red-500">test</p>
+      <AppRouter/>
+      {/* Header */}
+      {/* Footer */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
