@@ -1,16 +1,19 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import { BrowserRouter } from 'react-router'
-import { ThemeProvider } from './context/ThemeContext.jsx'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import App from './App.jsx';
+import { BrowserRouter } from 'react-router';
+import { ThemeProvider } from './context/ThemeContext.jsx';
+import { ProfileProvider } from './context/ProfileProvider.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ProfileProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </ProfileProvider>
+    </BrowserRouter>
   </StrictMode>,
 )

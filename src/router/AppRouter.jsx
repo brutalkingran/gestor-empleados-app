@@ -6,6 +6,7 @@ import NotFound from "../components/NotFound";
 import Profile from "../components/Profile";
 import ProfileSelector from "../components/ProfileSelector";
 import Employee from "../components/Employee";
+import ProfileDetail from "../components/ProfileDetail";
 
 const AppRouter = () => {
   return (
@@ -29,7 +30,7 @@ const AppRouter = () => {
       </Route>
       
       {/* Dinamic Routes */}
-      <Route path="/profile/:id" element={ <Profile/> } />
+      <Route path="/profile/:id" element={ <ProfileDetail/> } />
       <Route path="/employee/:id" element={ <Employee/> } />
 
       <Route path="/profiles" element={ <ProfileSelector/> } />

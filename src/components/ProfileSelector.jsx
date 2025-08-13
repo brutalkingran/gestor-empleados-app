@@ -1,18 +1,18 @@
-import axios from "axios"
-import { useEffect } from "react"
+import { useNavigate } from "react-router";
+import { useProfileContext } from "../context/ProfileContext"
+import ProfileCard from "./ProfileCard";
 
 const ProfileSelector = () => {
-  useEffect(() => {
-    
-  
-    return () => {
-      second
-    }
-  }, [third])
-  
-
+  const { profiles } = useProfileContext;
+  const navigate = useNavigate();
   return (
-    <div>ProfileSelector</div>
+    <div>
+      {
+        profiles.map((profile) => {
+          <ProfileCard key={ profile.id } name={ profile.name } avatar={ profile.avatar } onClick={ () => navigate(`/profiles/${profile.id}`) } />
+        })
+      }
+    </div>
   )
 }
 
