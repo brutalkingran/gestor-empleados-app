@@ -15,7 +15,7 @@ export const ProfileProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios(`${BASE_URL}/perfil`)
+      const { data } = await axios(`${BASE_URL}/perfil`);
 
       setProfiles(data);
 
@@ -27,17 +27,59 @@ export const ProfileProvider = ({ children }) => {
   }
 
   // POST
+  const addProfile = async ( profile_data ) => {
+    setLoading(true);
+
+    try {
+      const { data } = await axios.post(`${BASE_URL}/perfil`, profile_data);
+
+      setProfiles((prev) => [...prev, data]);
+
+    } catch (error) {
+      console.error("Error adding profiles: ", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   // PUT
+  const editProfile = async ( id, profile_data ) => {
+    setLoading(true);
+
+    try {
+      const { data } = await axios.put(`${BASE_URL}/perfil/${id}`, profile_data);
+
+      setProfiles((prev) => [...prev, data]);
+
+    } catch (error) {
+      console.error("Error editing profiles: ", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   // DELETE
+  const deleteProfile = async (id) => {
+    setLoading(true);
+
+    try {
+      const { data } = await axios.delete(`${BASE_URL}/perfil/${id}`);
+
+      setProfiles((prev) => [...prev, data]);
+
+    } catch (error) {
+      console.error("Error deleting profiles: ", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     fetchProfiles();
   }, []);
 
   return (
-    <ProfileContext.Provider value={{ profiles, loading, fetchProfiles }}>
+    <ProfileContext.Provider value={{ profiles, loading, fetchProfiles, addProfile, editProfile, deleteProfile }}>
       {children}
     </ProfileContext.Provider>
   );
