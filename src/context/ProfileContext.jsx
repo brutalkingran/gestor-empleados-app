@@ -27,11 +27,11 @@ export const ProfileProvider = ({ children }) => {
   }
 
   // POST
-  const addProfile = async ( profile_data ) => {
+  const addProfile = async ( profileData ) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${BASE_URL}/perfil`, profile_data);
+      const { data } = await axios.post(`${BASE_URL}/perfil`, profileData);
 
       setProfiles((prev) => [...prev, data]);
 
@@ -43,13 +43,13 @@ export const ProfileProvider = ({ children }) => {
   }
 
   // PUT
-  const editProfile = async ( id, profile_data ) => {
+  const editProfile = async ( id, updatedData ) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.put(`${BASE_URL}/perfil/${id}`, profile_data);
+      const { data } = await axios.put(`${BASE_URL}/perfil/${id}`, updatedData);
 
-      setProfiles((prev) => [...prev, data]);
+      setProfiles((prev) => prev.map((profile) => profile.id === id ? data : profile));
 
     } catch (error) {
       console.error("Error editing profiles: ", error);
@@ -59,13 +59,13 @@ export const ProfileProvider = ({ children }) => {
   }
 
   // DELETE
-  const deleteProfile = async (id) => {
+  const deleteProfile = async ( id ) => {
     setLoading(true);
 
     try {
       const { data } = await axios.delete(`${BASE_URL}/perfil/${id}`);
 
-      setProfiles((prev) => [...prev, data]);
+      setProfiles((prev) => prev.filter((profile) => profile !== data));
 
     } catch (error) {
       console.error("Error deleting profiles: ", error);

@@ -5,14 +5,17 @@ import App from './App.jsx';
 import { BrowserRouter } from 'react-router';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import { ProfileProvider } from './context/ProfileProvider.jsx';
+import { EmployeeProvider } from './context/EmployeeContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <ProfileProvider>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <EmployeeProvider>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </EmployeeProvider>
       </ProfileProvider>
     </BrowserRouter>
   </StrictMode>,

@@ -1,33 +1,34 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { fetchEmployee } from "../services/MockAPI";
+import { useEmployeeContext } from "../context/EmployeeContext";
+import EmployeeCard from "./EmployeeCard";
+import { useNavigate } from "react-router-dom";
 
 const Employee = () => {
-  const [employeeData, setEmployeeData] = useState(null)
-  const { id } = useParams();
+  const { employees, loading } = useEmployeeContext();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    setEmployeeData( fetchEmployee(id) );
-  }, [])
-  
+  if (loading) return <p>Cargando empleados...</p>;
+  if (!employees || employees.length === 0) return <p>No hay empleados</p>;
 
   return (
     <div>
-      <h1>
-        Employee ID: { id || "inválido" }
-      </h1>
-
-      <ul>
-        {
-          !employeeData
-            ? "No encontrado"
-            : employeeData.map( (data, key) =>
-              <li key={key}>{ data }</li>
-            )
-        }
-      </ul>
+      <h1>Dashboard de Empleados</h1>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+        {employees.map((emp) => (
+          <EmployeeCard
+            key={emp.id}
+            EmployeeName={emp.employeeName}
+            avatar={emp.photo}
+            positionName={emp.positionName}
+            rank={emp.rank}
+            department={emp.department}
+            isActive={emp.isActive}
+            notes={emp.notes}
+            onClick={() => navigate(`/employee/${emp.id}`)} // Ir a detalles
+          />
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Employee;

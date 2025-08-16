@@ -1,13 +1,26 @@
-import { useState } from "react"
-import { useProfileContext } from "../context/ProfileContext"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+import { useProfileContext } from "../context/ProfileContext";
+import { useEffect, useState } from "react";
 
-const ProfileCreate = () => {
+const ProfileUpdate = () => {
   const [ profileName, setProfileName ] = useState()
   const [ profileAvatar, setProfileAvatar ] = useState()
   const [ error, setError ] = useState(null)
-  const { addProfile } = useProfileContext();
+
+  const { id } = useParams();
+  const { profile, editProfile } = useProfileContext();
   const navigate = useNavigate();
+
+  // Cargar datos perfil existente
+
+  useEffect(() => {
+    first
+  
+    return () => {
+      second
+    }
+  }, [third])
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -36,7 +49,7 @@ const ProfileCreate = () => {
     <>
       <div>
         <div>
-          <h2>Crear nuevo perfil</h2>
+          <h2>Actualizar perfil</h2>
 
           {error && <p>{error}</p> }
 
@@ -56,7 +69,7 @@ const ProfileCreate = () => {
             />
 
             <button type="submit">
-              Crear Perfil
+              Actualizar Perfil
             </button>
         </div>
       </div>
@@ -64,4 +77,4 @@ const ProfileCreate = () => {
   )
 }
 
-export default ProfileCreate
+export default ProfileUpdate
