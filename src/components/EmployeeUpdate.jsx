@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router"
 import { useEmployeeContext } from "../context/EmployeeContext";
 import { useEffect, useState } from "react";
 
@@ -138,6 +138,14 @@ const EmployeeUpdate = () => {
 
             <button type="submit">
               Actualizar empleado
+            </button>
+
+            <button onClick={() => navigate(-1)}>
+              Regresar a Perfil
+            </button>
+
+            <button onClick={() => navigate(-1)}>
+              Regresar a Dashboard
             </button>
           </form>
         </div>

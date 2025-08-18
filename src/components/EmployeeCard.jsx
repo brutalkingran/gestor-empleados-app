@@ -1,4 +1,4 @@
-const EmployeeCard = ({ EmployeeName, avatar, positionName, rank, department, isActive, notes, onClick }) => {
+const EmployeeCard = ({ EmployeeName, avatar, positionName, rank, department, isActive, notes, onClickDetails, onClickEdit, onClickDelete }) => {
   return (
     <div className={`${ isActive ? "bg-color-white" : "bg-color-red-400"}`}>
       <div>
@@ -17,7 +17,15 @@ const EmployeeCard = ({ EmployeeName, avatar, positionName, rank, department, is
       </div>
       
       <div>
-        <button onClick={onClick}>Detalles</button>
+        <button onClick={onClickDetails}>Detalles</button>
+      </div>
+
+      <div>
+        <button onClick={onClickEdit}>Editar</button>
+      </div>
+
+      <div>
+        <button onClick={onClickDelete}>Borrar</button>
       </div>
     </div>
   )

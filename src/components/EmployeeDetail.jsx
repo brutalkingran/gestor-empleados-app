@@ -5,7 +5,6 @@ const EmployeeDetail = () => {
   const { id } = useParams();
   const { employees } = useEmployeeContext();
   const navigate = useNavigate();
-
   const employee = employees.find(emp => String(emp.id) === String(id));
 
   return (
@@ -26,6 +25,14 @@ const EmployeeDetail = () => {
 
             <button onClick={() => navigate(-1)}>
               Regresar
+            </button>
+
+            <button onClick={ () => navigate(`/employee/${employee.id}/edit`) }>
+              Editar
+            </button>
+
+            <button onClick={ () => navigate(`/employee/${employee.id}/delete`) }>
+              Borrar
             </button>
           </div>
         :

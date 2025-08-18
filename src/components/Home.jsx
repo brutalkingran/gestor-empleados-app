@@ -16,7 +16,7 @@ const Home = () => {
         Navigate to /about
       </button>
       
-      <button onClick={() => navigate('/dashboard')}>
+      <button onClick={() => navigate('employees-dashboard')}>
         Navigate to /dashboard
       </button>
 

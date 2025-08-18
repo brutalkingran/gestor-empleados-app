@@ -24,6 +24,10 @@ const ProfileDetail = () => {
             <button onClick={ navigate(-1) }>
               Regresar
             </button>
+
+            <button>
+              Editar
+            </button>
           </div>
         :
           <h1>Profile not found</h1>

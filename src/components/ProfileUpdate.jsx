@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router"
 import { useProfileContext } from "../context/ProfileContext";
 import { useEffect, useState } from "react";
 

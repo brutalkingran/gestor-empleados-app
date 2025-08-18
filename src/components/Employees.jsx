@@ -1,8 +1,8 @@
 import { useEmployeeContext } from "../context/EmployeeContext";
 import EmployeeCard from "./EmployeeCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
-const Employee = () => {
+const Employees = () => {
   const { employees, loading } = useEmployeeContext();
   const navigate = useNavigate();
 
@@ -23,7 +23,9 @@ const Employee = () => {
             department={emp.department}
             isActive={emp.isActive}
             notes={emp.notes}
-            onClick={() => navigate(`/employee/${emp.id}`)} // Ir a detalles
+            onClickDetails={() => navigate(`/employee/${emp.id}`)} // Ir a detalles
+            onClickEdit={() => navigate(`/employee/${emp.id}/edit`)} // Ir a edit
+            onClickDelete={() => navigate(`/employee/${emp.id}/delete`)} // Ir a edit
           />
         ))}
       </div>
@@ -31,4 +33,4 @@ const Employee = () => {
   );
 };
 
-export default Employee;
+export default Employees;

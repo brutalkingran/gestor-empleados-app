@@ -3,9 +3,12 @@ import Home from "../components/Home";
 import About from "../components/About";
 import Dashboard from "../components/Dashboard";
 import NotFound from "../components/NotFound";
-import Profile from "../components/Profile";
+import Profiles from "../components/Profiles";
 import ProfileSelector from "../components/ProfileSelector";
-import Employee from "../components/Employee";
+import Employees from "../components/Employees";
+import EmployeeDetail from "../components/EmployeeDetail";
+import EmployeeCreate from "../components/EmployeeCreate";
+import EmployeeUpdate from "../components/EmployeeUpdate";
 import ProfileDetail from "../components/ProfileDetail";
 import ProfileCreate from "../components/ProfileCreate";
 import ProfileUpdate from "../components/ProfileUpdate";
@@ -25,13 +28,14 @@ const AppRouter = () => {
       </Route>
 
       {/* Employees routes */}
-      <Route path="/employees-dashboard" element={<Employee/>} >
+      <Route path="/employees-dashboard" element={<Employees/>} >
         <Route path='employees' element={<h1>Users</h1>}/>
         <Route path='settings' element={<h1>Settings</h1>}/>
       </Route>
       <Route path="/employee-create/" element={ <EmployeeCreate/> } />
       <Route path="/employee/:id" element={ <EmployeeDetail/> } />
       <Route path="/employee/:id/edit" element={ <EmployeeUpdate/> } />
+      <Route path="/employee/:id/delete" element={ <EmployeeDelete/> } />
 
       {/* Profile routes */}
         {/* Dinamic Routes */}
@@ -39,6 +43,7 @@ const AppRouter = () => {
       <Route path="/profile/:id" element={ <ProfileDetail/> } />
       <Route path="/profile/:id/edit" element={ <ProfileUpdate/> } />
       <Route path="/profiles" element={ <ProfileSelector/> } />
+      <Route path="/profiles-dashboard" element={ <Profiles/> } />
 
       {/* Redirects */}
       <Route path="not-found" element={<NotFound/>}/>

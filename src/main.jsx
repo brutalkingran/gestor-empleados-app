@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';
 import { BrowserRouter } from 'react-router';
-import { ThemeProvider } from './context/ThemeContext.jsx';
-import { ProfileProvider } from './context/ProfileProvider.jsx';
+import { ProfileProvider } from './context/ProfileContext.jsx';
 import { EmployeeProvider } from './context/EmployeeContext.jsx';
+import { ThemeProvider } from './context/ThemeContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
