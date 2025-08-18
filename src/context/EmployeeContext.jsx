@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createContext, useState, useEffect, useContext } from 'react';
+import { toast } from 'react-toastify';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -10,33 +11,48 @@ export const useEmployeeContext = () => useContext(EmployeeContext)
 export const EmployeeProvider = ({ children }) => {
   const [ employees, setEmployees ] = useState([]);
   const [ loading, setLoading ] = useState(false);
+  const [ totalCount, setTotalCount ] = useState(0);
 
   // GET
-  const fetchEmployees = async ( ) => {
-    try {
-      const { data } = await axios.get(`${BASE_URL}empleado`);
+  const fetchEmployees = async (page = 1, limit = 10) => {
+  setLoading(true);
 
-      setEmployees(data);
-    } catch (error) {
-      console.error("Error fetching employees: ", error);
-    } finally {
-      setLoading(false);
+  try {
+    const { data } = await axios.get(`${BASE_URL}/empleado`, {
+      params: { page, limit }
+    });
+
+    setEmployees(data);
+
+    if (page === 1) {
+      const totalData = await axios.get(`${BASE_URL}/empleado`);
+      setTotalCount(totalData.data.length);
     }
+
+  } catch (error) {
+    console.error("Error fetching employees: ", error);
+    toast.warn("Error al encontrar empleados");
+  } finally {
+    setLoading(false);
   }
+};
+
 
   // POST
   const addEmployee = async ( employeeData ) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${BASE_URL}/empleado`, employeeData);
+      const { data } = await axios.post(`${BASE_URL}empleado`, employeeData);
 
       setEmployees((prev) => [...prev, data]);
 
     } catch (error) {
       console.error("Error adding employees: ", error);
+      toast.warn("Error al añadir empleado");
     } finally {
       setLoading(false);
+      toast.success("Empleado añadido con éxito");
     }
   }
 
@@ -45,14 +61,16 @@ export const EmployeeProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.put(`${BASE_URL}/empleado/${id}`, updatedData);
+      const { data } = await axios.put(`${BASE_URL}empleado/${id}`, updatedData);
 
       setEmployees((prev) => prev.map((employee) => employee.id === id ? data : employee));
 
     } catch (error) {
       console.error("Error editing employees: ", error);
+      toast.warn("Error al editar empleado");
     } finally {
       setLoading(false);
+      toast.info("Empleado editado con éxito");
     }
   }
 
@@ -61,14 +79,16 @@ export const EmployeeProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.delete(`${BASE_URL}/empleado/${id}`);
+      const { data } = await axios.delete(`${BASE_URL}empleado/${id}`);
 
-      setEmployees((prev) => prev.filter((employee) => employee !== data));
+      setEmployees((prev) => prev.filter((employee) => String(employee.id) !== String(id)));
 
     } catch (error) {
       console.error("Error deleting employees: ", error);
+      toast.warn("Error al eliminar empleado");
     } finally {
       setLoading(false);
+      toast.info("Empleado eliminado con éxito");
     }
   }
 
@@ -77,7 +97,7 @@ export const EmployeeProvider = ({ children }) => {
   }, []);
 
   return (
-    <EmployeeContext.Provider value={{ employees, loading, fetchEmployees, addEmployee, editEmployee, deleteEmployee }}>
+    <EmployeeContext.Provider value={{ employees, loading, fetchEmployees, addEmployee, editEmployee, deleteEmployee, totalCount }}>
       {children}
     </EmployeeContext.Provider>
   );

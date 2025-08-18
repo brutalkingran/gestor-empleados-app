@@ -67,9 +67,9 @@ const EmployeeUpdate = () => {
     <>
       <div>
         <div>
-          <h2>Actualizar empleado</h2>
-
           {error && <p>{error}</p> }
+
+          <h2>Actualizar empleado</h2>
 
           <form onSubmit={ handleSubmit }>
             <input

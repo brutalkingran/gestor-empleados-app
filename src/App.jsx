@@ -1,3 +1,4 @@
+import { Bounce, ToastContainer } from "react-toastify";
 import AppRouter from "./Router/AppRouter";
 
 function App() {
@@ -6,6 +7,19 @@ function App() {
       <AppRouter/>
       {/* Header */}
       {/* Footer */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   );
 }

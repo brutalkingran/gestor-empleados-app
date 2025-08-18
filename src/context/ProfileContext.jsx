@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createContext, useState, useEffect, useContext } from 'react';
+import { toast } from 'react-toastify';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL
 
@@ -22,6 +23,7 @@ export const ProfileProvider = ({ children }) => {
 
     } catch (error) {
       console.error("Error fetching profiles: ", error);
+      toast.warn("Error fetching profiles");
     } finally {
       setLoading(false);
     }
@@ -38,8 +40,10 @@ export const ProfileProvider = ({ children }) => {
 
     } catch (error) {
       console.error("Error adding profiles: ", error);
+      toast.warn("Error adding profile");
     } finally {
       setLoading(false);
+      toast.info("Perfil añadido con éxito");
     }
   }
 
@@ -54,8 +58,10 @@ export const ProfileProvider = ({ children }) => {
 
     } catch (error) {
       console.error("Error editing profiles: ", error);
+      toast.warn("Error editing profile");
     } finally {
       setLoading(false);
+      toast.info("Perfil editado con éxito");
     }
   }
 
@@ -70,8 +76,10 @@ export const ProfileProvider = ({ children }) => {
 
     } catch (error) {
       console.error("Error deleting profiles: ", error);
+      toast.warn("Error deleting profile");
     } finally {
       setLoading(false);
+      toast.info("Perfil borrado con éxito");
     }
   }
 

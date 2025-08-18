@@ -1,4 +1,6 @@
-import { useNavigate } from "react-router"
+import { useNavigate, useParams } from "react-router";
+import { useEmployeeContext } from "../context/EmployeeContext";
+import { useState } from "react";
 
 const EmployeeDelete = () => {
   const { id } = useParams();
@@ -12,10 +14,9 @@ const EmployeeDelete = () => {
 
     try {
       await deleteEmployee(id);
+      navigate("/employees-dashboard");
     } catch (error) {
       setError("Problema borrando empleado. Inténtelo de nuevo más tarde.");
-    } finally {
-      navigate("/employees-dashboard");
     }
   }
 
@@ -42,4 +43,4 @@ const EmployeeDelete = () => {
   )
 }
 
-export default EmployeeDelete
+export default EmployeeDelete;
