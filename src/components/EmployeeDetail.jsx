@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router"
 import { useEmployeeContext } from "../context/EmployeeContext";
+import { getEmployeeLevel } from "../services/EmployeeLevel";
 
 const EmployeeDetail = () => {
   const { id } = useParams();
@@ -12,28 +13,42 @@ const EmployeeDetail = () => {
       {
         employee
         ?
-          <div>
-            <img src={employee.photo} alt={employee.employeeName} width="200" />
-            <h2>{employee.employeeName}</h2>
+          <div className="flex flex-col items-center text-center bg-blue-100 p-10 rounded text-blue-900">
+            <img
+              src={employee.photo}
+              alt={employee.employeeName}
+              width="200"
+              className="mb-2 rounded-3xl"
+              onError={(e) => {
+                e.currentTarget.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+              }}
+            />
+            <h2 className="font-bold text-2xl mb-3">{employee.employeeName}</h2>
             <p><strong>Email:</strong> {employee.employeeEmail}</p>
-            <p><strong>Rango:</strong> {employee.rank}</p>
+            <p><strong>Sexo:</strong> {employee.sex }</p>
+            <p><strong>Edad:</strong> {employee.age }</p>
+            <p><strong>Rango:</strong> {getEmployeeLevel(employee.rank)}</p>
             <p><strong>Puesto:</strong> {employee.positionName}</p>
             <p><strong>Departamento:</strong> {employee.department}</p>
             <p><strong>Fecha de ingreso:</strong> {new Date(employee.entryDate).toLocaleDateString()}</p>
             <p><strong>Notas:</strong> {employee.notes}</p>
+            <p><strong>Número de Teléfono:</strong> {employee.phoneNumber }</p>
+            <p><strong>Nivel de Estrés:</strong> {employee.stressLevel }</p>
             <p><strong>Activo:</strong> {employee.isActive ? "Sí" : "No"}</p>
 
-            <button onClick={() => navigate(-1)}>
-              Regresar
-            </button>
+            <div className="flex flex-row items-center m-3">
+              <button onClick={() => navigate(-1)} className="mr-2 px-2 py-1 bg-blue-400 text-white rounded hover:bg-blue-300 cursor-pointer">
+                Regresar
+              </button>
 
-            <button onClick={ () => navigate(`/employee/${employee.id}/edit`) }>
-              Editar
-            </button>
+              <button onClick={ () => navigate(`/employee/${employee.id}/edit`) } className="mr-2 px-2 py-1 bg-blue-400 text-white rounded hover:bg-blue-300 cursor-pointer">
+                Editar
+              </button>
 
-            <button onClick={ () => navigate(`/employee/${employee.id}/delete`) }>
-              Borrar
-            </button>
+              <button onClick={ () => navigate(`/employee/${employee.id}/delete`) } className="mr-2 px-2 py-1 bg-blue-400 text-white rounded hover:bg-blue-300 cursor-pointer">
+                Borrar
+              </button>
+            </div>
           </div>
         :
           <h1>Empleado no encontrado</h1>

@@ -1,46 +1,62 @@
 import { useNavigate, useParams } from "react-router";
 import { useEmployeeContext } from "../context/EmployeeContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const EmployeeDelete = () => {
   const { id } = useParams();
   const { employees, deleteEmployee } = useEmployeeContext();
-  const [ error, setError ] = useState(null);
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
+
   const employee = employees.find(emp => String(emp.id) === String(id));
 
-  const onHandleDelete = async () => {
-    setError(null);
+  useEffect(() => {
+    if (!employee) return;
 
-    try {
-      await deleteEmployee(id);
-      navigate("/employees-dashboard");
-    } catch (error) {
-      setError("Problema borrando empleado. Inténtelo de nuevo más tarde.");
-    }
+    Swal.fire({
+      title: `¿Estás seguro que deseas borrar a ${employee.employeeName}?`,
+      text: "Esta operación no se puede deshacer",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Borrar",
+      cancelButtonText: "Cancelar"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteEmployee(id);
+
+          Swal.fire({
+            title: "Operación realizada con éxito!",
+            text: "El empleado ha sido eliminado.",
+            icon: "success",
+            confirmButtonText: "Aceptar"
+          });
+
+          navigate("/employees-dashboard");
+        } catch (err) {
+          setError("Problema borrando empleado. Inténtelo de nuevo más tarde.");
+        }
+      } else {
+        navigate("/employees-dashboard"); // Si cancela, vuelve atrás
+      }
+    });
+  }, [employee, deleteEmployee, id, navigate]);
+
+  if (!employee) {
+    return (
+      <div className="p-6 text-center text-gray-600">
+        <h1 className="text-2xl font-bold">Empleado no encontrado</h1>
+      </div>
+    );
   }
 
-  return (
-    <>
-      {
-        employee
-        ?
-          <div>
-            <h2>Estás seguro que deseas borrar a { employee.employeeName }</h2>
-
-            <button onClick={onHandleDelete}>
-              Sí
-            </button>
-
-            <button onClick={() => navigate(-1)}>
-              No
-            </button>
-          </div>
-        :
-          <h1>Empleado no encontrado</h1>
-      }
-    </>
-  )
-}
+  // Solo renderizamos algo si hay error
+  return error ? (
+    <div className="p-6 text-center text-red-600 font-semibold">{error}</div>
+  ) : null;
+};
 
 export default EmployeeDelete;
