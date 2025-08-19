@@ -13,16 +13,17 @@ const EmployeeDetail = () => {
       {
         employee
         ?
-          <div className="flex flex-col items-center text-center bg-blue-100 p-10 rounded text-blue-900">
-            <img
-              src={employee.photo}
-              alt={employee.employeeName}
-              width="200"
-              className="mb-2 rounded-3xl"
-              onError={(e) => {
-                e.currentTarget.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
-              }}
-            />
+          <div className="flex flex-col items-center text-center bg-blue-100 p-10 rounded text-blue-900 w-250">
+            <div className="w-40 h-40 rounded-full overflow-hidden mb-5">
+              <img
+                src={employee.photo}
+                alt={employee.employeeName}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+                }}
+              />
+            </div>
             <h2 className="font-bold text-2xl mb-3">{employee.employeeName}</h2>
             <p><strong>Email:</strong> {employee.employeeEmail}</p>
             <p><strong>Sexo:</strong> {employee.sex }</p>
@@ -51,7 +52,13 @@ const EmployeeDetail = () => {
             </div>
           </div>
         :
-          <h1>Empleado no encontrado</h1>
+          <div className="flex flex-col items-center">
+            <h1 className="text-neutral-600 italic mb-3">- Empleado no encontrado -</h1>
+            <button onClick={() => navigate(-1)} className="mr-2 px-2 py-1 bg-blue-400 text-white rounded hover:bg-blue-300 cursor-pointer">
+              Regresar
+            </button>
+          </div>
+
       }
     </>
   )

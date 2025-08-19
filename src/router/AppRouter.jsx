@@ -15,6 +15,7 @@ import ProfileCreate from "../components/ProfileCreate";
 import ProfileUpdate from "../components/ProfileUpdate";
 import MainLayout from "../layouts/MainLayout";
 import Contact from "../pages/Contact";
+import MyProfile from "../pages/MyProfile";
 
 const AppRouter = () => {
   return (
@@ -25,6 +26,7 @@ const AppRouter = () => {
         <Route path="/login" element={<h1>Login</h1>} />
         <Route path="/about" element={<About/>} />
         <Route path="/contact" element={<Contact/>} />
+        <Route path="/my-profile" element={<MyProfile/>} />
 
         {/* Nested User Routes */}
         <Route path="/user-dashboard" element={<Dashboard type={"user"}/>} >

@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router';
 import logo from '../assets/icon.svg';
 import { ButtonNavbar } from './ui/Buttons';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <header className="w-full flex items-center justify-between px-6 py-3 bg-blue-600 text-white">
       {/* Izquierda - Logo */}
@@ -20,10 +23,10 @@ const Navbar = () => {
 
       {/* Derecha - Perfil y modo oscuro */}
       <div className="flex items-center gap-4">
-        <button className="bg-white text-blue-600 px-3 py-1 rounded hover:bg-gray-200">
+        <button className="bg-white text-blue-600 px-3 py-1 rounded hover:bg-gray-200 cursor-pointer" onClick={() => navigate("/my-profile")}>
           Mi perfil
         </button>
-        <button className="text-xl hover:scale-110 transition">
+        <button className="text-xl hover:scale-110 transition cursor-pointer">
           🌙
         </button>
       </div>

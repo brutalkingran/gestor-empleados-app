@@ -19,7 +19,7 @@ const Employees = () => {
 
   if (loading) return <div className="flex flex-col text-center items-center"> <ClipLoader color="#0000FF" size={200}/> <p className="text-blue-400">Cargando...</p> </div>;
 
-  if (!employees || employees.length === 0) return <div><p>No hay empleados</p></div>;
+  if (!employees || employees.length === 0) return <div className="text-center"><p className="mb-2 text-neutral-500 italic">- No hay empleados -</p> <button onClick={() => navigate('/employee-create')} className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 cursor-pointer mb-5"> Añadir Empleado </button> </div>;
   
   return (
     <div className="p-6">
