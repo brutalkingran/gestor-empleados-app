@@ -3,15 +3,26 @@ import { useProfileContext } from "../context/ProfileContext";
 
 const ProfileDetail = () => {
   const { id } = useParams();
-  const { profiles } = useProfileContext();
+  const { profiles, deleteProfile } = useProfileContext();
   const navigate = useNavigate();
   const profile = profiles.find(profile => profile.id === id)
+
+  const handleDelete = async () => {
+    const confirm = window.confirm(`¿Estás seguro que quieres borrar este perfil?`);
+
+    if ( confirm ) {
+      try {
+        await deleteProfile( profile.id );
+      } catch(error) {
+        console.error(error);
+      }
+    }
+  }
 
   return (
     <>
       {
-        profile
-        ?
+        profile ?
           <div>
             <img src={avatar} alt="avatar" />
             <h2>{name}</h2>
@@ -25,8 +36,12 @@ const ProfileDetail = () => {
               Regresar
             </button>
 
-            <button>
+            <button onClick={ navigate(`/profiles/${id}/edit`)}>
               Editar
+            </button>
+
+            <button onClick={handleDelete}>
+              Borrar
             </button>
           </div>
         :

@@ -15,13 +15,13 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Datos enviados:", formData);
-    alert("Mensaje enviado correctamente 🚀");
+    alert("Mensaje enviado con éxito");
     setFormData({ name: "", email: "", message: "" });
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8">
-      <h2 className="text-2xl font-bold text-blue-900 mb-6 text-center">
+    <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8 dark:bg-indigo-800 dark:text-white">
+      <h2 className="text-2xl font-bold text-white mb-6 text-center">
         Contáctanos
       </h2>
 
@@ -57,7 +57,7 @@ const Contact = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer"
         >
           Enviar mensaje
         </button>

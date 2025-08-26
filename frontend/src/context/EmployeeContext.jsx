@@ -37,7 +37,6 @@ export const EmployeeProvider = ({ children }) => {
   }
 };
 
-
   // POST
   const addEmployee = async ( employeeData ) => {
     setLoading(true);

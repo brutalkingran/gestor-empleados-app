@@ -54,7 +54,7 @@ export const ProfileProvider = ({ children }) => {
     try {
       const { data } = await axios.put(`${BASE_URL}/perfil/${id}`, updatedData);
 
-      setProfiles((prev) => prev.map((profile) => profile.id === id ? data : profile));
+      setProfiles((prev) => prev.map((profile) => profile._id === id ? data : profile));
 
     } catch (error) {
       console.error("Error editing profiles: ", error);
@@ -72,7 +72,7 @@ export const ProfileProvider = ({ children }) => {
     try {
       const { data } = await axios.delete(`${BASE_URL}/perfil/${id}`);
 
-      setProfiles((prev) => prev.filter((profile) => profile !== data));
+      setProfiles((prev) => prev.filter((profile) => profile._id !== id));
 
     } catch (error) {
       console.error("Error deleting profiles: ", error);

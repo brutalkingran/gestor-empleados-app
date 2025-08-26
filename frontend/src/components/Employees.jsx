@@ -4,7 +4,7 @@ import EmployeeCard from "./EmployeeCard";
 import { useNavigate } from "react-router";
 import { ClipLoader } from "react-spinners";
 import { getEmployeeLevel } from "../services/EmployeeLevel";
-
+// TODO: AÑADIR ORDENES
 const Employees = () => {
   const { employees, loading, fetchEmployees, totalCount } = useEmployeeContext();
   const navigate = useNavigate();
@@ -22,9 +22,9 @@ const Employees = () => {
   if (!employees || employees.length === 0) return <div className="text-center"><p className="mb-2 text-neutral-500 italic">- No hay empleados -</p> <button onClick={() => navigate('/employee-create')} className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 cursor-pointer mb-5"> Añadir Empleado </button> </div>;
   
   return (
-    <div className="p-6">
+    <div className="md:p-6">
       <div>
-        <h1 className="text-3xl font-bold mb-6 text-blue-500 text-center">
+        <h1 className="text-3xl font-bold mb-6 text-blue-500 text-center dark:text-white">
           Dashboard de Empleados
         </h1>
         <button onClick={() => navigate('/employee-create')} className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 cursor-pointer mb-5">

@@ -22,12 +22,12 @@ export const ButtonMobile = ({ text, action }) => {
   )
 }
 
-export const ButtonNavbar = ({ text, to }) => {
+export const ButtonNavbar = ({ text, to, styles = "text-white hover:text-gray-200" }) => {
   const navigate = useNavigate();
 
   return (
     <button
-      className="cursor-pointer hover:text-gray-200"
+      className={`cursor-pointer ${styles}`}
       onClick={() => navigate(to)}
     >
       { text }

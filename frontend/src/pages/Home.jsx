@@ -1,0 +1,31 @@
+import { useNavigate } from "react-router";
+
+const Home = () => {
+  const navigate = useNavigate();
+
+  return (
+    <section className="px-4 py-6">
+      <div className="flex flex-col items-center text-center bg-blue-200 rounded-2xl p-6 md:p-12 text-blue-900 dark:bg-indigo-800 dark:text-white max-w-2xl mx-auto">
+        <h1 className="text-2xl md:text-4xl mb-5 font-bold">
+          Bienvenidos a <span className="text-gray-800 dark:text-indigo-300">Gest</span>EX
+        </h1>
+
+        <p className="mb-3 text-sm md:text-base">
+          En esta aplicación, podrás gestionar todos los empleados de tu empresa, verificar su estado, ocupación, puesto, entre otros.
+        </p>
+        <p className="mb-6 text-sm md:text-base">
+          ¿Te gustaría ver qué aptitudes poseen tus empleados? El botón de abajo te permitirá verlos a todos en tiempo real.
+        </p>
+
+        <button
+          onClick={() => navigate("/employees-dashboard")}
+          className="px-5 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-600 transition-all bg-blue-500 text-white cursor-pointer text-sm md:text-base"
+        >
+          Ir a Dashboard
+        </button>
+      </div>
+    </section>
+  );
+}
+
+export default Home
