@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import logo from '../assets/icon.svg';
+import logo_dark from '../assets/icon_dark.svg';
 import { ButtonNavbar } from './ui/Buttons';
 import { AiOutlineMoon } from "react-icons/ai";
 import { AiOutlineSun } from "react-icons/ai";
@@ -14,10 +15,10 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
-    <header className="w-full flex items-center justify-between px-6 py-3 bg-blue-600 dark:bg-indigo-700 text-white z-50">
+    <header className="w-full flex items-center justify-between px-6 py-3 bg-blue-600 dark:bg-purple-900 text-slate-300 z-50">
       {/* Logo */}
       <a className="text-xl font-bold cursor-pointer flex flex-row items-center" href="/"> 
-        <img src={logo} width={"25%"} alt="logo GestEX" />
+        <img src={ darkMode ? logo_dark : logo } width={"25%"} alt="logo GestEX" />
         <h1>Gest<span className='text-blue-800 dark:text-indigo-300'>EX</span></h1>
       </a>
 

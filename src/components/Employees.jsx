@@ -3,7 +3,7 @@ import { useEmployeeContext } from "../context/EmployeeContext";
 import EmployeeCard from "./EmployeeCard";
 import { useNavigate } from "react-router";
 import { ClipLoader } from "react-spinners";
-import { getEmployeeLevel } from "../services/EmployeeLevel";
+
 // TODO: AÑADIR ORDENES
 const Employees = () => {
   const { employees, loading, fetchEmployees, totalCount } = useEmployeeContext();
@@ -40,7 +40,7 @@ const Employees = () => {
             EmployeeName={emp.employeeName}
             avatar={emp.photo}
             positionName={emp.positionName}
-            rank={ getEmployeeLevel(emp.rank) }
+            rank={ emp.rank }
             department={emp.department}
             isActive={emp.isActive}
             entryDate={emp.entryDate}

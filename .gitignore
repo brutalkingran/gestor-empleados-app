@@ -1,5 +1,7 @@
 .env
-
+estructura.txt
+backend/.env
+frontend/.env
 # Logs
 logs
 *.log

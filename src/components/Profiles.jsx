@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { fetchProfile } from "../services/MockAPI";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null)

@@ -1,4 +1,4 @@
-# Gestor de Empleados
+# Gestor de Empleados - Frontend
 
 Esta aplicación permite administrar fácilmente los empleados de tu empresa, ordenarlos según su nombre, puesto y fecha de admisión.
 

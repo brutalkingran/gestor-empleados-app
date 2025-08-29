@@ -1,0 +1,11 @@
+<svg width="128" height="128" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title>Icono de dos usuarios en morado</title>
+  
+  <!-- Silueta pequeña detrás (morado oscuro) -->
+  <circle cx="22" cy="18" r="6" fill="#5B2C6F"/>
+  <path d="M10 36 a10 10 0 0 1 20 0 v6 a10 10 0 0 1 -20 0 z" fill="#5B2C6F"/>
+  
+  <!-- Silueta grande al frente (morado claro) -->
+  <circle cx="40" cy="20" r="8" fill="#9B59B6"/>
+  <path d="M28 40 a12 12 0 0 1 24 0 v8 a12 12 0 0 1 -24 0 z" fill="#9B59B6"/>
+</svg>

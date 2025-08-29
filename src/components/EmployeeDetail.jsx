@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from "react-router"
 import { useEmployeeContext } from "../context/EmployeeContext";
-import { getEmployeeLevel } from "../services/EmployeeLevel";
 
 const EmployeeDetail = () => {
   const { id } = useParams();

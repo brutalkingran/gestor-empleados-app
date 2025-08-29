@@ -22,7 +22,7 @@ export const ButtonMobile = ({ text, action }) => {
   )
 }
 
-export const ButtonNavbar = ({ text, to, styles = "text-white hover:text-gray-200" }) => {
+export const ButtonNavbar = ({ text, to, styles = "text-slate-100 hover:text-gray-200" }) => {
   const navigate = useNavigate();
 
   return (

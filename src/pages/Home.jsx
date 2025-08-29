@@ -5,9 +5,9 @@ const Home = () => {
 
   return (
     <section className="px-4 py-6">
-      <div className="flex flex-col items-center text-center bg-blue-200 rounded-2xl p-6 md:p-12 text-blue-900 dark:bg-indigo-800 dark:text-white max-w-2xl mx-auto">
+      <div className="flex flex-col items-center text-center bg-blue-200 rounded-2xl p-6 md:p-12 dark:bg-slate-800 dark:border-2 dark:border-purple-700 max-w-2xl mx-auto">
         <h1 className="text-2xl md:text-4xl mb-5 font-bold">
-          Bienvenidos a <span className="text-gray-800 dark:text-indigo-300">Gest</span>EX
+          Bienvenidos a Gest<span className="text-gray-800 dark:text-indigo-300">EX</span>
         </h1>
 
         <p className="mb-3 text-sm md:text-base">
@@ -19,7 +19,7 @@ const Home = () => {
 
         <button
           onClick={() => navigate("/employees-dashboard")}
-          className="px-5 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-600 transition-all bg-blue-500 text-white cursor-pointer text-sm md:text-base"
+          className="px-5 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-600 transition-all bg-blue-500 dark:bg-indigo-200 dark:text-indigo-400 dark:hover:bg-indigo-100 text-white cursor-pointer text-sm md:text-base"
         >
           Ir a Dashboard
         </button>
