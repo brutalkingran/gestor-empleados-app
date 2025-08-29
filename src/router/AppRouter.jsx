@@ -35,7 +35,7 @@ const AppRouter = () => {
         </Route>
 
         {/* Employees routes */}
-        <Route path="/employees-dashboard" element={<Employees/>} >
+        <Route path="/employees-dashboard/:page" element={<Employees/>} >
           <Route path='employees' element={<h1>Users</h1>}/>
           <Route path='settings' element={<h1>Settings</h1>}/>
         </Route>

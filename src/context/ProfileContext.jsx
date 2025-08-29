@@ -3,7 +3,6 @@ import { createContext, useState, useEffect, useContext } from 'react';
 import { toast } from 'react-toastify';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL
-
 const ProfileContext = createContext();
 
 export const useProfileContext = () => useContext(ProfileContext)
@@ -17,7 +16,7 @@ export const ProfileProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios(`${BASE_URL}/perfil`);
+      const { data } = await axios(`${BASE_URL}/employees`);
 
       setProfiles(data);
 

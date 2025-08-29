@@ -9,7 +9,7 @@ const EmployeeDelete = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
-  const employee = employees.find(emp => String(emp.id) === String(id));
+  const employee = employees.find(emp => String(emp._id) === String(id));
 
   useEffect(() => {
     if (!employee) return;

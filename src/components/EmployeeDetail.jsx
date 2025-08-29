@@ -5,7 +5,7 @@ const EmployeeDetail = () => {
   const { id } = useParams();
   const { employees } = useEmployeeContext();
   const navigate = useNavigate();
-  const employee = employees.find(emp => String(emp.id) === String(id));
+  const employee = employees.find(emp => String(emp._id) === String(id));
 
   return (
     <>
@@ -23,14 +23,14 @@ const EmployeeDetail = () => {
                 }}
               />
             </div>
-            <h2 className="font-bold text-2xl mb-3">{employee.employeeName}</h2>
-            <p><strong>Email:</strong> {employee.employeeEmail}</p>
+            <h2 className="font-bold text-2xl mb-3">{employee.firstName} {employee.lastName}</h2>
+            <p><strong>Email:</strong> {employee.email}</p>
             <p><strong>Sexo:</strong> {employee.sex }</p>
             <p><strong>Edad:</strong> {employee.age }</p>
-            <p><strong>Rango:</strong> {getEmployeeLevel(employee.rank)}</p>
-            <p><strong>Puesto:</strong> {employee.positionName}</p>
+            <p><strong>Rango:</strong> {employee.rank}</p>
+            <p><strong>Puesto:</strong> {employee.position}</p>
             <p><strong>Departamento:</strong> {employee.department}</p>
-            <p><strong>Fecha de ingreso:</strong> {new Date(employee.entryDate).toLocaleDateString()}</p>
+            <p><strong>Fecha de ingreso:</strong> {new Date(employee.hireDate).toLocaleDateString()}</p>
             <p><strong>Notas:</strong> {employee.notes}</p>
             <p><strong>Número de Teléfono:</strong> {employee.phoneNumber }</p>
             <p><strong>Nivel de Estrés:</strong> {employee.stressLevel }</p>
@@ -41,11 +41,11 @@ const EmployeeDetail = () => {
                 Regresar
               </button>
 
-              <button onClick={ () => navigate(`/employee/${employee.id}/edit`) } className="mr-2 px-2 py-1 bg-blue-400 text-white rounded hover:bg-blue-300 cursor-pointer">
+              <button onClick={ () => navigate(`/employee/${employee._id}/edit`) } className="mr-2 px-2 py-1 bg-blue-400 text-white rounded hover:bg-blue-300 cursor-pointer">
                 Editar
               </button>
 
-              <button onClick={ () => navigate(`/employee/${employee.id}/delete`) } className="mr-2 px-2 py-1 bg-blue-400 text-white rounded hover:bg-blue-300 cursor-pointer">
+              <button onClick={ () => navigate(`/employee/${employee._id}/delete`) } className="mr-2 px-2 py-1 bg-blue-400 text-white rounded hover:bg-blue-300 cursor-pointer">
                 Borrar
               </button>
             </div>

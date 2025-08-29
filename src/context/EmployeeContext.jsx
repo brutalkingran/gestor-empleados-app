@@ -14,18 +14,18 @@ export const EmployeeProvider = ({ children }) => {
   const [ totalCount, setTotalCount ] = useState(0);
 
   // GET
-  const fetchEmployees = async (page = 1, limit = 10) => {
+  const fetchEmployees = async (page = 1, limit = 20) => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`${BASE_URL}/employees`, {
+      const { data } = await axios.get(`${BASE_URL}/employees?page=${page}&limit=${limit}`, {
         params: { page, limit }
       });
 
-      setEmployees(data.data); // empleados
-      setTotalCount(data.totalCount); // total
+      setEmployees(data.data);
+      setTotalCount(data.totalCount);
     } catch (error) {
-      console.error("Error fetching employees: ", error);
-      toast.warn("Error al encontrar empleados");
+      console.error("Error fetching employees:", error);
+      toast.warn("Error cargando empleados");
     } finally {
       setLoading(false);
     }
