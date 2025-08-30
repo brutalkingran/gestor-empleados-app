@@ -27,7 +27,7 @@ const EmployeeDetail = () => {
             <p><strong>Email:</strong> {employee.email}</p>
             <p><strong>Sexo:</strong> {employee.sex }</p>
             <p><strong>Edad:</strong> {employee.age }</p>
-            <p><strong>Rango:</strong> {employee.rank}</p>
+            <p><strong>Rango:</strong> {employee.rank.name}</p>
             <p><strong>Puesto:</strong> {employee.position}</p>
             <p><strong>Departamento:</strong> {employee.department}</p>
             <p><strong>Fecha de ingreso:</strong> {new Date(employee.hireDate).toLocaleDateString()}</p>

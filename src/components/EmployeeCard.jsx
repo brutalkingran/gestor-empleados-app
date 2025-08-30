@@ -1,19 +1,32 @@
-import { AiOutlineEdit } from "react-icons/ai";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
-const EmployeeCard = ({ EmployeeName, avatar, positionName, rank, department, isActive,
-employeeEmail,
-sex, notes, onClickDetails, onClickEdit, onClickDelete }) => {
+const EmployeeCard = ({
+  EmployeeName,
+  photo,
+  positionName,
+  rank,
+  department,
+  email,
+  isActive,
+  sex,
+  notes,
+  onClickDetails,
+  onClickEdit,
+  onClickDelete,
+}) => {
   return (
     <div
       onClick={onClickDetails}
-      className={`grid grid-cols-1 md:grid-cols-7 gap-4 p-4 rounded-lg shadow-md transition cursor-pointer dark:bg-indigo-300
-        ${isActive ? "bg-white" : "bg-red-100 border border-red-300 dark:border-indigo-700 dark:bg-indigo-700"}`}
+      className={`grid grid-cols-1 md:grid-cols-7 gap-4 p-4 rounded-lg shadow-md transition cursor-pointer 
+        ${isActive 
+          ? "bg-white dark:bg-indigo-300" 
+          : "bg-red-100 border border-red-300 dark:border-indigo-700 dark:bg-indigo-700"
+        }`}
     >
       {/* Avatar */}
       <div className="flex items-center justify-center md:col-span-1">
         <img
-          src={avatar || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
+          src={photo || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
           alt={EmployeeName}
           className="w-20 h-20 md:w-16 md:h-16 rounded-full object-cover"
           onError={(e) => {
@@ -24,13 +37,15 @@ sex, notes, onClickDetails, onClickEdit, onClickDelete }) => {
 
       {/* Datos */}
       <div className="flex flex-col items-center md:items-start text-center md:text-left md:col-span-3">
-        <h2 className="font-semibold text-blue-900 dark:text-indigo-700 text-lg">{EmployeeName}</h2>
+        <h2 className="font-semibold text-blue-900 dark:text-indigo-700 text-lg">
+          {EmployeeName}
+        </h2>
         <p className="text-sm">{positionName}</p>
-        <p className="text-sm">{rank}</p>
-        <p className="text-sm">{department}</p>
-        <p className="text-sm">{employeeEmail}</p>
+        <p className="text-sm">{rank?.name || rank}</p>
+        <p className="text-sm">{department?.name || department}</p>
+        <p className="text-sm">{email}</p>
         <p className="text-sm">
-          {sex.charAt(0).toUpperCase() + String(sex).slice(1)}
+          {sex ? sex.charAt(0).toUpperCase() + String(sex).slice(1) : ""}
         </p>
       </div>
 
@@ -65,6 +80,6 @@ sex, notes, onClickDetails, onClickEdit, onClickDelete }) => {
       </div>
     </div>
   );
-}
+};
 
 export default EmployeeCard;

@@ -64,17 +64,18 @@ const Employees = () => {
           <EmployeeCard
             key={emp._id}
             EmployeeName={`${emp.firstName} ${emp.lastName}`}
-            avatar={emp.photo}
+            email={emp.email}
+            phoneNumber={emp.phoneNumber}
             positionName={emp.position}
             rank={ emp.rank }
             department={emp.department}
-            isActive={emp.isActive}
             entryDate={emp.hireDate}
-            employeeEmail={emp.email}
-            phoneNumber={emp.phoneNumber}
+            isActive={emp.isActive}
+            salary={emp.salary}
+            age={emp.birthday}
             sex={emp.sex}
-            age={emp.age}
             stressLevel={emp.stressLevel}
+            photo={emp.photo}
             notes={emp.notes}
             onClickDetails={() => navigate(`/employee/${emp._id}`)}
             onClickEdit={() => navigate(`/employee/${emp._id}/edit`)}
