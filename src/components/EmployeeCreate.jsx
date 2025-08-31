@@ -1,67 +1,31 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useEmployeeContext } from "../context/EmployeeContext";
 import { useNavigate } from "react-router";
-import Swal from "sweetalert2"; // 👈 importa sweetalert2
+import Swal from "sweetalert2";
 
-const EmployeeCreate = () => {
-  const [employeeName, setEmployeeName] = useState("");
-  const [employeeEmail, setEmployeeEmail] = useState("");
-  const [rank, setRank] = useState("");
-  const [positionName, setPositionName] = useState("");
-  const [department, setDepartment] = useState("");
-  const [entryDate, setEntryDate] = useState("");
-  const [photo, setPhoto] = useState("");
-  const [notes, setNotes] = useState("");
-  const [isActive, setIsActive] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [sex, setSex] = useState("");
-  const [age, setAge] = useState("");
-  const [stressLevel, setStressLevel] = useState("");
-
+export default function EmployeeCreate() {
   const { addEmployee } = useEmployeeContext();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const today = new Date().toISOString().split("T")[0]; // formato YYYY-MM-DD
 
-    // Validar todos los campos obligatorios
-    if (
-      !employeeName ||
-      !employeeEmail ||
-      rank === "" ||
-      !positionName ||
-      !department ||
-      !entryDate ||
-      !photo ||
-      !phoneNumber ||
-      !sex ||
-      !age ||
-      !stressLevel ||
-      !notes
-    ) {
-      Swal.fire({
-        icon: "warning",
-        title: "Campos incompletos",
-        text: "Por favor, completa todos los campos antes de continuar.",
-      });
-      return;
-    }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      hireDate: today,
+      isActive: false,
+    },
+  });
 
+  const onSubmit = async (data) => {
     try {
       await addEmployee({
-        employeeName,
-        employeeEmail,
-        rank,
-        positionName,
-        department,
-        entryDate,
-        photo,
-        notes,
-        isActive,
-        phoneNumber,
-        sex,
-        age,
-        stressLevel,
+        ...data,
+        rank: Number(data.rank), // Convertir a número
+        isActive: data.isActive || false,
       });
 
       Swal.fire({
@@ -88,31 +52,52 @@ const EmployeeCreate = () => {
         Añadir nuevo empleado
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <input
           type="text"
           placeholder="Nombre del empleado"
-          value={employeeName}
-          onChange={(e) => setEmployeeName(e.target.value)}
+          {...register("firstName", { required: true })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
+        {errors.employeeName && <span className="text-red-500 text-sm">Nombre obligatorio</span>}
+
+        <input
+          type="text"
+          placeholder="Apellido del empleado"
+          {...register("lastName", { required: true })}
+          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+        />
+        {errors.employeeName && <span className="text-red-500 text-sm">Nombre obligatorio</span>}
 
         <input
           type="email"
           placeholder="Correo electrónico"
-          value={employeeEmail}
-          onChange={(e) => setEmployeeEmail(e.target.value)}
+          {...register("email", { required: true })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
+        {errors.employeeEmail && <span className="text-red-500 text-sm">Correo obligatorio</span>}
+
+        <input
+          type="text"
+          placeholder="Número de teléfono"
+          {...register("phoneNumber", { required: true })}
+          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+        />
+        {errors.phoneNumber && <span className="text-red-500 text-sm">Teléfono obligatorio</span>}
+
+        <input
+          type="text"
+          placeholder="Puesto"
+          {...register("position", { required: true })}
+          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+        />
+        {errors.positionName && <span className="text-red-500 text-sm">Puesto obligatorio</span>}
 
         <select
-          value={rank}
-          onChange={(e) => setRank(Number(e.target.value))}
+          {...register("rank", { required: true })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         >
-          <option value="" disabled>
-            Selecciona un rango
-          </option>
+          <option value="" disabled>Selecciona un rango</option>
           <option value={0}>Trainee</option>
           <option value={1}>Junior</option>
           <option value={2}>Semi-Senior</option>
@@ -121,98 +106,87 @@ const EmployeeCreate = () => {
           <option value={5}>Lead</option>
           <option value={6}>Manager</option>
         </select>
-
-        <input
-          type="text"
-          placeholder="Puesto"
-          value={positionName}
-          onChange={(e) => setPositionName(e.target.value)}
-          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
-        />
+        {errors.rank && <span className="text-red-500 text-sm">Rango obligatorio</span>}
 
         <input
           type="text"
           placeholder="Departamento"
-          value={department}
-          onChange={(e) => setDepartment(e.target.value)}
+          {...register("department", { required: true })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
+        {errors.department && <span className="text-red-500 text-sm">Departamento obligatorio</span>}
+
+        <input
+          type="date" value={new Date().toLocaleDateString()}
+          {...register("hireDate", { required: true })}
+          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+        />
+        {errors.entryDate && <span className="text-red-500 text-sm">Fecha de ingreso obligatoria</span>}
+
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            {...register("isActive")}
+            className="h-4 w-4 text-blue-600 border-gray-300 rounded"
+          />
+          <span className="text-gray-700 cursor-pointer">Activo</span>
+        </label>
+
+        <input
+          type="number"
+          placeholder="Salario"
+          {...register("salary", { required: true })}
+          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+        />
+        {errors.photo && <span className="text-red-500 text-sm">Salario Obligatorio</span>}
 
         <input
           type="date"
-          value={entryDate}
-          onChange={(e) => setEntryDate(e.target.value)}
+          {...register("birthday", { required: true })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
-
-        <input
-          type="text"
-          placeholder="URL de la foto"
-          value={photo}
-          onChange={(e) => setPhoto(e.target.value)}
-          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
-        />
-
-        <input
-          type="text"
-          placeholder="Número de teléfono"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
-        />
+        {errors.entryDate && <span className="text-red-500 text-sm">Fecha de nacimiento obligatorio</span>}
 
         <select
-          value={sex}
-          onChange={(e) => setSex(e.target.value)}
+          {...register("sex", { required: true })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         >
           <option value="">Seleccionar sexo</option>
           <option value="female">Femenino</option>
           <option value="male">Masculino</option>
         </select>
-
-        <input
-          type="number"
-          placeholder="Edad"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
-        />
+        {errors.sex && <span className="text-red-500 text-sm">Sexo obligatorio</span>}
 
         <input
           type="number"
           placeholder="Nivel de estrés (0-100)"
-          value={stressLevel}
-          onChange={(e) => setStressLevel(e.target.value)}
+          {...register("stressLevel", { required: true, min: 0, max: 100 })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
+        {errors.stressLevel && <span className="text-red-500 text-sm">Nivel de estrés obligatorio</span>}
+
+        <input
+          type="text"
+          placeholder="URL de la foto"
+          {...register("photo", { required: true })}
+          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+        />
+        {errors.photo && <span className="text-red-500 text-sm">Foto obligatoria</span>}
 
         <textarea
           placeholder="Notas"
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
+          {...register("notes", { required: false })}
           className="w-full border rounded px-3 py-2 h-24 resize-none focus:ring-2 focus:ring-blue-400"
         />
-
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={isActive}
-            onChange={(e) => setIsActive(e.target.checked)}
-            className="h-4 w-4 text-blue-600 border-gray-300 rounded"
-          />
-          <span className="text-gray-700">Activo</span>
-        </label>
+        {errors.notes && <span className="text-red-500 text-sm">Notas obligatorias</span>}
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer"
         >
           Guardar Empleado
         </button>
       </form>
     </div>
   );
-};
-
-export default EmployeeCreate;
+}

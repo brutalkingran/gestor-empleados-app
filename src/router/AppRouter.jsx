@@ -16,6 +16,7 @@ import ProfileUpdate from "../components/ProfileUpdate";
 import MainLayout from "../layouts/MainLayout";
 import Contact from "../pages/Contact";
 import MyProfile from "../pages/MyProfile";
+import Login from "../pages/Login";
 
 const AppRouter = () => {
   return (
@@ -23,7 +24,7 @@ const AppRouter = () => {
       <Route path="/" element={<MainLayout/>}>
         {/* Main Routes */}
         <Route path="/" element={<Home/>} />
-        <Route path="/login" element={<h1>Login</h1>} />
+        <Route path="/login" element={<Login/>} />
         <Route path="/about" element={<About/>} />
         <Route path="/contact" element={<Contact/>} />
         <Route path="/my-profile" element={<MyProfile/>} />
@@ -35,7 +36,7 @@ const AppRouter = () => {
         </Route>
 
         {/* Employees routes */}
-        <Route path="/employees-dashboard/:page" element={<Employees/>} >
+        <Route path="/employees-dashboard/" element={<Employees/>} >
           <Route path='employees' element={<h1>Users</h1>}/>
           <Route path='settings' element={<h1>Settings</h1>}/>
         </Route>

@@ -18,7 +18,7 @@ const Home = () => {
         </p>
 
         <button
-          onClick={() => navigate("/employees-dashboard/1")}
+          onClick={() => navigate("/employees-dashboard/")}
           className="px-5 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-600 transition-all bg-blue-500 dark:bg-indigo-200 dark:text-indigo-400 dark:hover:bg-indigo-100 text-white cursor-pointer text-sm md:text-base"
         >
           Ir a Dashboard

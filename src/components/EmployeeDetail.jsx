@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router"
 import { useEmployeeContext } from "../context/EmployeeContext";
+import { calculateAge } from "../services/calculateAge";
 
 const EmployeeDetail = () => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ const EmployeeDetail = () => {
             <div className="w-40 h-40 rounded-full overflow-hidden mb-5">
               <img
                 src={employee.photo}
-                alt={employee.employeeName}
+                alt={"foto de " + employee.firstName}
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   e.currentTarget.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
@@ -25,16 +26,18 @@ const EmployeeDetail = () => {
             </div>
             <h2 className="font-bold text-2xl mb-3">{employee.firstName} {employee.lastName}</h2>
             <p><strong>Email:</strong> {employee.email}</p>
-            <p><strong>Sexo:</strong> {employee.sex }</p>
-            <p><strong>Edad:</strong> {employee.age }</p>
-            <p><strong>Rango:</strong> {employee.rank.name}</p>
-            <p><strong>Puesto:</strong> {employee.position}</p>
-            <p><strong>Departamento:</strong> {employee.department}</p>
-            <p><strong>Fecha de ingreso:</strong> {new Date(employee.hireDate).toLocaleDateString()}</p>
-            <p><strong>Notas:</strong> {employee.notes}</p>
             <p><strong>Número de Teléfono:</strong> {employee.phoneNumber }</p>
-            <p><strong>Nivel de Estrés:</strong> {employee.stressLevel }</p>
+            <p><strong>Puesto:</strong> {employee.position}</p>
+            <p><strong>Rango:</strong> {employee?.rank?.name ?? "-"}</p>
+            <p><strong>Departamento:</strong> {employee.department.name}</p>
+            <p><strong>Fecha de ingreso:</strong> {new Date(employee.hireDate).toLocaleDateString()}</p>
+            <p><strong>Fecha de nacimiento:</strong> {new Date(employee.birthday).toLocaleDateString() }</p>
             <p><strong>Activo:</strong> {employee.isActive ? "Sí" : "No"}</p>
+            <p><strong>salario:</strong> ${employee.salary}</p>
+            <p><strong>Edad:</strong> {calculateAge(employee.birthday) }</p>
+            <p><strong>Sexo:</strong> {employee.sex }</p>
+            <p><strong>Nivel de Estrés:</strong> {employee.stressLevel }</p>
+            <p><strong>Notas:</strong> {employee.notes}</p>
 
             <div className="flex flex-row items-center m-3">
               <button onClick={() => navigate(-1)} className="mr-2 px-2 py-1 bg-blue-400 text-white rounded hover:bg-blue-300 cursor-pointer">

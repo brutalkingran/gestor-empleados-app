@@ -41,8 +41,8 @@ const EmployeeCard = ({
           {EmployeeName}
         </h2>
         <p className="text-sm">{positionName}</p>
-        <p className="text-sm">{rank?.name || rank}</p>
-        <p className="text-sm">{department?.name || department}</p>
+        <p className="text-sm">{rank?.name}</p>
+        <p className="text-sm">{department?.name}</p>
         <p className="text-sm">{email}</p>
         <p className="text-sm">
           {sex ? sex.charAt(0).toUpperCase() + String(sex).slice(1) : ""}

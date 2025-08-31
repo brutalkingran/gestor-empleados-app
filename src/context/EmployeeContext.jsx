@@ -9,16 +9,22 @@ const EmployeeContext = createContext();
 export const useEmployeeContext = () => useContext(EmployeeContext)
 
 export const EmployeeProvider = ({ children }) => {
-  const [ employees, setEmployees ] = useState([]);
-  const [ loading, setLoading ] = useState(false);
-  const [ totalCount, setTotalCount ] = useState(0);
+  const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+  const [ranks, setRanks] = useState([]);
+  const [departments, setDepartments] = useState([]);
+
+  // 👉 Nuevo estado
+  const [sortBy, setSortBy] = useState("firstName");
+  const [sortOrder, setSortOrder] = useState("asc");
 
   // GET
-  const fetchEmployees = async (page = 1, limit = 20) => {
+  const fetchEmployees = async (page = 1, limit = 20, sortByParam = sortBy, sortOrderParam = sortOrder) => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`${BASE_URL}/employees?page=${page}&limit=${limit}`, {
-        params: { page, limit }
+      const { data } = await axios.get(`${BASE_URL}/employees`, {
+        params: { page, limit, sortBy: sortByParam, sortOrder: sortOrderParam }
       });
 
       setEmployees(data.data);
@@ -85,13 +91,51 @@ export const EmployeeProvider = ({ children }) => {
     }
   }
 
+  // Fetch de ranks
+  const fetchRanks = async () => {
+    try {
+      console.log("A");
+      // const { data } = await axios.get(`${BASE_URL}/ranks`);
+      // setRanks(data);
+    } catch (err) {
+      console.error("Error cargando ranks", err);
+    }
+  };
+
+  // Fetch de departments
+  const fetchDepartments = async () => {
+    try {
+      console.log("A");
+      
+      // const { data } = await axios.get(`${BASE_URL}/departments`);
+      // setDepartments(data);
+    } catch (err) {
+      console.error("Error cargando departments", err);
+    }
+  };
+
   useEffect(() => {
     fetchEmployees();
+    fetchRanks();
+    fetchDepartments();
   }, []);
 
-  return (
-    <EmployeeContext.Provider value={{ employees, loading, fetchEmployees, addEmployee, editEmployee, deleteEmployee, totalCount }}>
-      {children}
-    </EmployeeContext.Provider>
+  return (<EmployeeContext.Provider value={{
+    employees,
+    ranks,
+    departments,
+    loading,
+    fetchEmployees,
+    addEmployee,
+    editEmployee,
+    deleteEmployee,
+    totalCount,
+    sortBy,
+    setSortBy,
+    sortOrder,
+    setSortOrder
+  }}>
+    {children}
+  </EmployeeContext.Provider>
   );
 };

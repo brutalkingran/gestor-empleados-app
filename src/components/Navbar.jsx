@@ -35,6 +35,9 @@ const Navbar = () => {
         <button className="bg-white text-blue-600 px-3 py-1 rounded hover:bg-gray-200 cursor-pointer flex flex-row items-center" onClick={() => navigate("/my-profile")}>
           <span className='md:mr-2'><AiOutlineUser /></span><span className='hidden md:flex'>Mi perfil</span>
         </button>
+        <button className="bg-white text-blue-600 px-3 py-1 rounded hover:bg-gray-200 cursor-pointer flex flex-row items-center" onClick={() => navigate("/login")}>
+          <span className='md:mr-2'>Ingresar</span>
+        </button>
         <button className="hidden md:flex text-xl hover:scale-110 transition cursor-pointer" onClick={ () => setDarkMode( !darkMode ) }>
           { darkMode ? <AiOutlineMoon /> : <AiOutlineSun /> }
         </button>
