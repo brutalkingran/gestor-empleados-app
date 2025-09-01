@@ -16,4 +16,10 @@ También permite ingresar nuevos empleados, eliminarlos o editarlos a convenienc
 
 # Despliegue
 
-https://gestex.netlify.app/
+[Frontend](https://gestex.netlify.app/)
+
+[Backend](https://gestor-empleados-backend.onrender.com/)
+
+# Repositorio Backend
+
+https://github.com/brutalkingran/gestor-empleados-backend
