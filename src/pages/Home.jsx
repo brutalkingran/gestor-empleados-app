@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router";
+import { useAuthContext } from "../context/AuthContext";
+import { ButtonNavbar } from "../components/ui/Buttons";
 
 const Home = () => {
+  const { isLoggedIn } = useAuthContext()
   const navigate = useNavigate();
+
+  const loggedIn = isLoggedIn();
 
   return (
     <section className="px-4 py-6">
@@ -17,12 +22,16 @@ const Home = () => {
           ¿Te gustaría ver qué aptitudes poseen tus empleados? El botón de abajo te permitirá verlos a todos en tiempo real.
         </p>
 
-        <button
-          onClick={() => navigate("/employees-dashboard/")}
-          className="px-5 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-600 transition-all bg-blue-500 dark:bg-indigo-200 dark:text-indigo-400 dark:hover:bg-indigo-100 text-white cursor-pointer text-sm md:text-base"
-        >
-          Ir a Dashboard
-        </button>
+        {/* <button
+          onClick={}
+          className=""
+          </button>
+        > */}
+        { 
+          loggedIn
+          ?  <ButtonNavbar text={"Ir a Dashboard"} to={"/employees-dashboard/"} styles="px-5 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-600 transition-all bg-blue-500 dark:bg-indigo-200 dark:text-indigo-400 dark:hover:bg-indigo-100 text-white cursor-pointer text-sm md:text-base"/>
+          :  <ButtonNavbar text={"Ingresa a tu Cuenta"} to={"/login" } styles="px-5 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-600 transition-all bg-blue-500 dark:bg-indigo-200 dark:text-indigo-400 dark:hover:bg-indigo-100 text-white cursor-pointer text-sm md:text-base"/>
+        }
       </div>
     </section>
   );

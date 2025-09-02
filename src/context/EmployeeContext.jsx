@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createContext, useState, useEffect, useContext } from 'react';
 import { toast } from 'react-toastify';
+import { useAuthContext } from './AuthContext';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -9,6 +10,8 @@ const EmployeeContext = createContext();
 export const useEmployeeContext = () => useContext(EmployeeContext)
 
 export const EmployeeProvider = ({ children }) => {
+  const { token, isLoggedIn } = useAuthContext()
+
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
@@ -24,6 +27,7 @@ export const EmployeeProvider = ({ children }) => {
     setLoading(true);
     try {
       const { data } = await axios.get(`${BASE_URL}/employees`, {
+        headers: { Authorization: `Bearer ${token}` },
         params: { page, limit, sortBy: sortByParam, sortOrder: sortOrderParam }
       });
 
@@ -42,7 +46,7 @@ export const EmployeeProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${BASE_URL}empleado`, employeeData);
+      const { data } = await axios.post(`${BASE_URL}/employees/create`, employeeData);
 
       setEmployees((prev) => [...prev, data]);
 
@@ -60,7 +64,7 @@ export const EmployeeProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.put(`${BASE_URL}empleado/${id}`, updatedData);
+      const { data } = await axios.put(`${BASE_URL}/employees/modify/${id}`, updatedData);
 
       setEmployees((prev) => prev.map((employee) => employee.id === id ? data : employee));
 
@@ -78,7 +82,7 @@ export const EmployeeProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.delete(`${BASE_URL}empleado/${id}`);
+      await axios.delete(`${BASE_URL}/employees/delete//${id}`);
 
       setEmployees((prev) => prev.filter((employee) => String(employee.id) !== String(id)));
 
@@ -94,9 +98,8 @@ export const EmployeeProvider = ({ children }) => {
   // Fetch de ranks
   const fetchRanks = async () => {
     try {
-      console.log("A");
-      // const { data } = await axios.get(`${BASE_URL}/ranks`);
-      // setRanks(data);
+      const { data } = await axios.get(`${BASE_URL}/ranks`);
+      setRanks(data);
     } catch (err) {
       console.error("Error cargando ranks", err);
     }
@@ -105,20 +108,22 @@ export const EmployeeProvider = ({ children }) => {
   // Fetch de departments
   const fetchDepartments = async () => {
     try {
-      console.log("A");
-      
-      // const { data } = await axios.get(`${BASE_URL}/departments`);
-      // setDepartments(data);
+      const { data } = await axios.get(`${BASE_URL}/departments`);
+      setDepartments(data);
     } catch (err) {
       console.error("Error cargando departments", err);
     }
   };
 
+  const loggedIn = isLoggedIn(); 
+
   useEffect(() => {
-    fetchEmployees();
-    fetchRanks();
-    fetchDepartments();
-  }, []);
+    if (loggedIn) {
+      fetchEmployees();
+      fetchRanks();
+      fetchDepartments();
+    }
+  }, [loggedIn]);
 
   return (<EmployeeContext.Provider value={{
     employees,

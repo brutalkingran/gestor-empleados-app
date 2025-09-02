@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createContext, useState, useEffect, useContext } from 'react';
 import { toast } from 'react-toastify';
+import { useAuthContext } from './AuthContext';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL
 const ProfileContext = createContext();
@@ -8,6 +9,8 @@ const ProfileContext = createContext();
 export const useProfileContext = () => useContext(ProfileContext)
 
 export const ProfileProvider = ({ children }) => {
+  const { token, isLoggedIn } = useAuthContext()
+
   const [ profiles, setProfiles ] = useState([]);
   const [ loading, setLoading ] = useState(false);
 
@@ -16,7 +19,9 @@ export const ProfileProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios(`${BASE_URL}/employees`);
+      const { data } = await axios(`${BASE_URL}/employees`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
       setProfiles(data);
 
@@ -82,9 +87,13 @@ export const ProfileProvider = ({ children }) => {
     }
   }
 
+  const loggedIn = isLoggedIn(); 
+
   useEffect(() => {
-    fetchProfiles();
-  }, []);
+    if (loggedIn) {
+      fetchProfiles();
+    }
+  }, [loggedIn]);
 
   return (
     <ProfileContext.Provider value={{ profiles, loading, fetchProfiles, addProfile, editProfile, deleteProfile }}>

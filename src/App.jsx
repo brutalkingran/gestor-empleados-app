@@ -5,8 +5,6 @@ function App() {
   return (
     <>
       <AppRouter/>
-      {/* Header */}
-      {/* Footer */}
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
