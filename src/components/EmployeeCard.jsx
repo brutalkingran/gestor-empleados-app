@@ -1,4 +1,5 @@
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { useAuthContext } from "../context/AuthContext";
 
 const EmployeeCard = ({
   EmployeeName,
@@ -14,6 +15,8 @@ const EmployeeCard = ({
   onClickEdit,
   onClickDelete,
 }) => {
+  const { user } = useAuthContext()
+
   return (
     <div
       onClick={onClickDetails}
@@ -56,27 +59,35 @@ const EmployeeCard = ({
 
       {/* Botones */}
       <div className="flex md:flex-col justify-center items-center gap-3 mt-4 md:mt-0 md:col-span-1">
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onClickEdit();
-          }}
-          className="text-xs px-3 py-2 bg-green-100 text-green-700 rounded hover:bg-green-200 cursor-pointer flex items-center gap-1"
-        >
-          <span className="hidden md:flex">Editar</span>
-          <AiOutlineEdit className="md:hidden" size={20} />
-        </button>
-
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onClickDelete();
-          }}
-          className="text-xs px-3 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200 cursor-pointer flex items-center gap-1"
-        >
-          <span className="hidden md:flex">Borrar</span>
-          <AiOutlineDelete className="md:hidden" size={20} />
-        </button>
+        {
+          user.rank.permissions.includes("manage_all_employees")
+          ? <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClickEdit();
+                }}
+                className="text-xs px-3 py-2 bg-green-100 text-green-700 rounded hover:bg-green-200 cursor-pointer flex items-center gap-1"
+              >
+                <span className="hidden md:flex">Editar</span>
+                <AiOutlineEdit className="md:hidden" size={20} />
+              </button>
+              
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClickDelete();
+                }}
+                className="text-xs px-3 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200 cursor-pointer flex items-center gap-1"
+              >
+                <span className="hidden md:flex">Borrar</span>
+                <AiOutlineDelete className="md:hidden" size={20} />
+              </button>
+          </>
+          :
+            <></>
+        }
+        
       </div>
     </div>
   );

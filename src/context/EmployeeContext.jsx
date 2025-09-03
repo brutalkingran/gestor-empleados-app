@@ -96,34 +96,34 @@ export const EmployeeProvider = ({ children }) => {
   }
 
   // Fetch de ranks
-  const fetchRanks = async () => {
-    try {
-      const { data } = await axios.get(`${BASE_URL}/ranks`);
-      setRanks(data);
-    } catch (err) {
-      console.error("Error cargando ranks", err);
-    }
-  };
+  // const fetchRanks = async () => {
+  //   try {
+  //     const { data } = await axios.get(`${BASE_URL}/ranks`);
+  //     setRanks(data);
+  //   } catch (err) {
+  //     console.error("Error cargando ranks", err);
+  //   }
+  // };
 
   // Fetch de departments
-  const fetchDepartments = async () => {
-    try {
-      const { data } = await axios.get(`${BASE_URL}/departments`);
-      setDepartments(data);
-    } catch (err) {
-      console.error("Error cargando departments", err);
-    }
-  };
+  // const fetchDepartments = async () => {
+  //   try {
+  //     const { data } = await axios.get(`${BASE_URL}/departments`);
+  //     setDepartments(data);
+  //   } catch (err) {
+  //     console.error("Error cargando departments", err);
+  //   }
+  // };
 
-  const loggedIn = isLoggedIn(); 
+  // const loggedIn = isLoggedIn(); 
 
-  useEffect(() => {
-    if (loggedIn) {
-      fetchEmployees();
-      fetchRanks();
-      fetchDepartments();
-    }
-  }, [loggedIn]);
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     fetchEmployees();
+  //     fetchRanks();
+  //     fetchDepartments();
+  //   }
+  // }, [loggedIn]);
 
   return (<EmployeeContext.Provider value={{
     employees,

@@ -11,13 +11,13 @@ import { useState } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 
 const Navbar = () => {
-  const { isLoggedIn } = useAuthContext()
+  const { isLoggedIn, logout, user } = useAuthContext()
 
   const navigate = useNavigate();
   const { darkMode, setDarkMode } = useThemeContext();
   const [isModalOpen, setIsModalOpen] = useState(false)
   const loggedIn = isLoggedIn();
-
+  
   return (
     <header className="w-full flex items-center justify-between px-6 py-3 bg-blue-600 dark:bg-purple-900 text-slate-300 z-50">
       {/* Logo */}
@@ -31,11 +31,15 @@ const Navbar = () => {
         <ButtonNavbar text={"Inicio"} to={"/"}/>
         {
           loggedIn
-          ??
+          &&
             <>
               <ButtonNavbar text={"Empleados"} to={"/employees-dashboard"}/>
               <ButtonNavbar text={"Agregar empleado"} to={"/employee-create"}/>
             </>
+        }
+        {
+          (loggedIn && user.rank.permissions.includes("manage_all_employees"))
+          && <ButtonNavbar text={"Usuarios"} to={"/profiles-dashboard"}/>
         }
         <ButtonNavbar text={"Acerca de"} to={"/about"}/>
         <ButtonNavbar text={"Contacto"} to={"/contact"}/>
@@ -44,16 +48,24 @@ const Navbar = () => {
       {/* Perfil / modo oscuro */}
       <div className="flex items-center gap-4">
         {
-          isLoggedIn
+          !loggedIn
           ?
-            <button className="bg-white text-blue-600 px-3 py-1 rounded hover:bg-gray-200 cursor-pointer flex flex-row items-center" onClick={() => navigate("/login")}>
-              <span className='md:mr-2'>Ingresar</span>
-            </button>
+            <>
+              <button className="bg-white text-blue-600 px-3 py-1 rounded hover:bg-gray-200 cursor-pointer flex flex-row items-center" onClick={() => navigate("/login")}>
+                <span className='md:mr-2'>Ingresar</span>
+              </button>
+            </>
           : 
-            <button className="bg-white text-blue-600 px-3 py-1 rounded hover:bg-gray-200 cursor-pointer flex flex-row items-center" onClick={() => navigate("/my-profile")}>
+          <>
+            <button className="bg-white text-blue-600 px-3 py-1 rounded hover:bg-gray-200 cursor-pointer flex flex-row items-center" onClick={() => navigate(`/profile/${user.id}`)}>
               <span className='md:mr-2'><AiOutlineUser /></span><span className='hidden md:flex'>Mi perfil</span>
             </button>
+            <button className="bg-white text-blue-600 px-3 py-1 rounded hover:bg-gray-200 cursor-pointer flex flex-row items-center" onClick={() => logout()}>
+              <span className='md:mr-2'>Cerrar Sesión</span>
+            </button>
+          </>
         }
+        
         <button className="hidden md:flex text-xl hover:scale-110 transition cursor-pointer" onClick={ () => setDarkMode( !darkMode ) }>
           { darkMode ? <AiOutlineMoon /> : <AiOutlineSun /> }
         </button>

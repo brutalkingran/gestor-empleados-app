@@ -8,8 +8,9 @@ import { exportToCSV } from "../services/exportToCSV";
 const Employees = () => {
   const { employees, loading, fetchEmployees, totalCount } = useEmployeeContext();
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  
   // 🔽 valores desde la URL
   const currentPage = parseInt(searchParams.get("page")) || 1;
   const sortBy = searchParams.get("sortBy") || "firstName";
@@ -82,13 +83,13 @@ const Employees = () => {
           onClick={() => setSearchParams({ page: currentPage, sortBy, sortOrder: "asc" })}
           className={`px-3 py-1 rounded ${sortOrder === "asc" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"}`}
         >
-          Asc
+          Asc.
         </button>
         <button
           onClick={() => setSearchParams({ page: currentPage, sortBy, sortOrder: "desc" })}
           className={`px-3 py-1 rounded ${sortOrder === "desc" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"}`}
         >
-          Desc
+          Desc.
         </button>
       </div>
 

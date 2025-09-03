@@ -19,12 +19,11 @@ export const ProfileProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios(`${BASE_URL}/employees`, {
+      const { data } = await axios(`${BASE_URL}/users`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      setProfiles(data);
-
+      setProfiles(data.data);
     } catch (error) {
       console.error("Error fetching profiles: ", error);
       toast.warn("Error fetching profiles");
@@ -38,7 +37,7 @@ export const ProfileProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${BASE_URL}/perfil`, profileData);
+      const { data } = await axios.post(`${BASE_URL}/users/create`, profileData);
 
       setProfiles((prev) => [...prev, data]);
 
@@ -56,7 +55,7 @@ export const ProfileProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.put(`${BASE_URL}/perfil/${id}`, updatedData);
+      const { data } = await axios.put(`${BASE_URL}/users/modify/`, updatedData);
 
       setProfiles((prev) => prev.map((profile) => profile._id === id ? data : profile));
 
@@ -74,7 +73,7 @@ export const ProfileProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.delete(`${BASE_URL}/perfil/${id}`);
+      await axios.delete(`${BASE_URL}/users/delete/${id}`);
 
       setProfiles((prev) => prev.filter((profile) => profile._id !== id));
 
