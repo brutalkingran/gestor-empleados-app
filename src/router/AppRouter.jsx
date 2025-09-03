@@ -11,12 +11,12 @@ import Dashboard from "../components/Dashboard";
 import Profiles from "../components/Profiles";
 import Employees from "../components/Employees";
 import EmployeeDetail from "../components/EmployeeDetail";
-import EmployeeCreate from "../components/EmployeeCreate";
-import EmployeeUpdate from "../components/EmployeeUpdate";
+import { EmployeeCreate } from "../components/EmployeeCreate";
 import EmployeeDelete from "../components/EmployeeDelete";
 import ProfileDetail from "../components/ProfileDetail";
 import ProfileCreate from "../components/ProfileCreate";
 import ProfileUpdate from "../components/ProfileUpdate";
+import { EmployeeUpdate } from "../components/EmployeeUpdate";
 
 const AppRouter = () => {
   return (

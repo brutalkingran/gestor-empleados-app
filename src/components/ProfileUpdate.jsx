@@ -3,9 +3,12 @@ import { useProfileContext } from "../context/ProfileContext";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { useEmployeeContext } from "../context/EmployeeContext";
+
 
 export default function ProfileUpdate() {
   const { id } = useParams();
+  const { employees, editEmployee, fetchRanks, fetchDepartments, ranks, departments } = useEmployeeContext();
   const { profiles, editProfile } = useProfileContext();
   const navigate = useNavigate();
 
@@ -17,6 +20,11 @@ export default function ProfileUpdate() {
     setValue,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    fetchRanks();
+    fetchDepartments();
+  }, []); 
 
   // Inicializar los valores del formulario
   useEffect(() => {
@@ -101,14 +109,11 @@ export default function ProfileUpdate() {
             <select
               {...register("rank", { required: true })}
               className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+              defaultValue={profiles.rank?._id || ""}
             >
-              <option value="" disabled>
-                Selecciona un rango
-              </option>
-              {[0, 1, 2, 3, 4, 5, 6].map((r) => (
-                <option key={r} value={r}>
-                  {["Trainee", "Junior", "Semi-Senior", "Mid", "Senior", "Lead", "Manager"][r]}
-                </option>
+              <option value="" disabled>Selecciona un rango</option>
+              {ranks.map((r) => (
+                <option key={r._id} value={r._id}>{r.name}</option>
               ))}
             </select>
             {errors.rank && <span className="text-red-500 text-sm">Rango obligatorio</span>}

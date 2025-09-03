@@ -1,37 +1,34 @@
-import { useForm } from "react-hook-form";
-import { useEmployeeContext } from "../context/EmployeeContext";
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { useEmployeeContext } from "../context/EmployeeContext";
 
-export default function EmployeeCreate() {
-  const { addEmployee } = useEmployeeContext();
-  const navigate = useNavigate();
-
-  const today = new Date().toISOString().split("T")[0]; // formato YYYY-MM-DD
-
+export const EmployeeCreate = () => {
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      hireDate: today,
-      isActive: false,
-    },
-  });
+    addEmployee,
+    fetchRanks,
+    fetchDepartments,
+    ranks,
+    departments
+  } = useEmployeeContext();
+  
+  const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  // Cargar ranks y departments al montar
+  useEffect(() => {
+    fetchRanks();
+    fetchDepartments();
+  }, []);
 
   const onSubmit = async (data) => {
     try {
-      await addEmployee({
-        ...data,
-        rank: Number(data.rank), // Convertir a número
-        isActive: data.isActive || false,
-      });
+      await addEmployee(data);
 
       Swal.fire({
         icon: "success",
         title: "Empleado creado",
-        text: "El nuevo empleado fue añadido correctamente.",
         timer: 2000,
         showConfirmButton: false,
       });
@@ -40,8 +37,8 @@ export default function EmployeeCreate() {
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Error al guardar",
-        text: "Hubo un problema creando el empleado. Inténtalo más tarde.",
+        title: "Error al crear",
+        text: error.message || "Hubo un problema al crear el empleado.",
       });
     }
   };
@@ -49,79 +46,76 @@ export default function EmployeeCreate() {
   return (
     <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8">
       <h2 className="text-2xl font-bold text-blue-900 mb-6 text-center">
-        Añadir nuevo empleado
+        Crear Empleado
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <input
           type="text"
-          placeholder="Nombre del empleado"
+          placeholder="Nombre"
           {...register("firstName", { required: true })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
-        {errors.employeeName && <span className="text-red-500 text-sm">Nombre obligatorio</span>}
+        {errors.firstName && <span className="text-red-500 text-sm">Nombre obligatorio</span>}
 
         <input
           type="text"
-          placeholder="Apellido del empleado"
+          placeholder="Apellido"
           {...register("lastName", { required: true })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
-        {errors.employeeName && <span className="text-red-500 text-sm">Nombre obligatorio</span>}
+        {errors.lastName && <span className="text-red-500 text-sm">Apellido obligatorio</span>}
 
         <input
           type="email"
-          placeholder="Correo electrónico"
+          placeholder="Email"
           {...register("email", { required: true })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
-        {errors.employeeEmail && <span className="text-red-500 text-sm">Correo obligatorio</span>}
+        {errors.email && <span className="text-red-500 text-sm">Correo obligatorio</span>}
 
         <input
           type="text"
-          placeholder="Número de teléfono"
-          {...register("phoneNumber", { required: true })}
+          placeholder="Teléfono"
+          {...register("phoneNumber")}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
-        {errors.phoneNumber && <span className="text-red-500 text-sm">Teléfono obligatorio</span>}
 
         <input
           type="text"
-          placeholder="Puesto"
-          {...register("position", { required: true })}
+          placeholder="Cargo / Puesto"
+          {...register("position")}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
-        {errors.positionName && <span className="text-red-500 text-sm">Puesto obligatorio</span>}
 
         <select
           {...register("rank", { required: true })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         >
           <option value="" disabled>Selecciona un rango</option>
-          <option value={0}>Trainee</option>
-          <option value={1}>Junior</option>
-          <option value={2}>Semi-Senior</option>
-          <option value={3}>Mid</option>
-          <option value={4}>Senior</option>
-          <option value={5}>Lead</option>
-          <option value={6}>Manager</option>
+          {ranks.map((r) => (
+            <option key={r._id} value={r._id}>{r.name}</option>
+          ))}
         </select>
         {errors.rank && <span className="text-red-500 text-sm">Rango obligatorio</span>}
 
-        <input
-          type="text"
-          placeholder="Departamento"
+        <select
           {...register("department", { required: true })}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
-        />
+        >
+          <option value="" disabled>Selecciona un departamento</option>
+          {departments.map((d) => (
+            <option key={d._id} value={d._id}>{d.name}</option>
+          ))}
+        </select>
         {errors.department && <span className="text-red-500 text-sm">Departamento obligatorio</span>}
 
         <input
-          type="date" value={new Date().toLocaleDateString()}
-          {...register("hireDate", { required: true })}
+          type="date"
+          placeholder="Fecha de ingreso"
+          {...register("hireDate")}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
-        {errors.entryDate && <span className="text-red-500 text-sm">Fecha de ingreso obligatoria</span>}
 
         <label className="flex items-center gap-2 cursor-pointer">
           <input
@@ -135,58 +129,51 @@ export default function EmployeeCreate() {
         <input
           type="number"
           placeholder="Salario"
-          {...register("salary", { required: true })}
+          {...register("salary")}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
-        {errors.photo && <span className="text-red-500 text-sm">Salario Obligatorio</span>}
 
         <input
           type="date"
-          {...register("birthday", { required: true })}
+          placeholder="Cumpleaños"
+          {...register("birthday")}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
-        {errors.entryDate && <span className="text-red-500 text-sm">Fecha de nacimiento obligatorio</span>}
-
-        <select
-          {...register("sex", { required: true })}
-          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
-        >
-          <option value="">Seleccionar sexo</option>
-          <option value="female">Femenino</option>
-          <option value="male">Masculino</option>
-        </select>
-        {errors.sex && <span className="text-red-500 text-sm">Sexo obligatorio</span>}
-
-        <input
-          type="number"
-          placeholder="Nivel de estrés (0-100)"
-          {...register("stressLevel", { required: true, min: 0, max: 100 })}
-          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
-        />
-        {errors.stressLevel && <span className="text-red-500 text-sm">Nivel de estrés obligatorio</span>}
 
         <input
           type="text"
-          placeholder="URL de la foto"
-          {...register("photo", { required: true })}
+          placeholder="Sexo"
+          {...register("sex")}
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
-        {errors.photo && <span className="text-red-500 text-sm">Foto obligatoria</span>}
+
+        <input
+          type="number"
+          placeholder="Nivel de estrés"
+          {...register("stressLevel")}
+          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+        />
+
+        <input
+          type="text"
+          placeholder="Foto (URL)"
+          {...register("photo")}
+          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
+        />
 
         <textarea
           placeholder="Notas"
-          {...register("notes", { required: false })}
-          className="w-full border rounded px-3 py-2 h-24 resize-none focus:ring-2 focus:ring-blue-400"
+          {...register("notes")}
+          className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
-        {errors.notes && <span className="text-red-500 text-sm">Notas obligatorias</span>}
 
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer"
         >
-          Guardar Empleado
+          Crear Empleado
         </button>
       </form>
     </div>
   );
-}
+};
