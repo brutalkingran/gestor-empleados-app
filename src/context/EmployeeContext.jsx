@@ -30,7 +30,7 @@ export const EmployeeProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${token}` },
         params: { page, limit, sortBy: sortByParam, sortOrder: sortOrderParam }
       });
-
+      
       setEmployees(data.data);
       setTotalCount(data.totalCount);
     } catch (error) {

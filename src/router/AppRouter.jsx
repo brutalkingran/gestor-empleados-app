@@ -7,7 +7,6 @@ import Contact from "../pages/Contact";
 import Login from "../pages/Login";
 import ForbiddenPage from "../pages/ForbiddenPage";
 import { PrivateRoutes, AdminRoutes } from "./PrivateRoutes";
-import Dashboard from "../components/Dashboard";
 import Profiles from "../components/Profiles";
 import Employees from "../components/Employees";
 import EmployeeDetail from "../components/EmployeeDetail";
@@ -35,23 +34,22 @@ const AppRouter = () => {
 
     {/* PRIVATE ROUTES */}
     <Route element={<PrivateRoutes />}>
-      {/* Employee dashboard */}
+      {/* Rutas accesibles a todos los logueados */}
       <Route path="employees-dashboard" element={<Employees />} />
-      <Route path="employee-create" element={<EmployeeCreate />} />
-      <Route path="employee/:id" element={<EmployeeDetail />} />
-      <Route path="employee/:id/edit" element={<EmployeeUpdate />} />
-      <Route path="employee/:id/delete" element={<EmployeeDelete />} />
 
-      {/* Profiles */}
-      <Route path="profiles-dashboard" element={<Profiles />} />
-      <Route path="profile-create" element={<ProfileCreate />} />
-      <Route path="profile/:id" element={<ProfileDetail />} />
-      <Route path="profile/:id/edit" element={<ProfileUpdate />} />
+      {/* RUTAS SOLO ADMIN */}
+      <Route element={<AdminRoutes />}>
+        {/* Employee dashboard */}
+        <Route path="employee-create" element={<EmployeeCreate />} />
+        <Route path="employee/:id" element={<EmployeeDetail />} />
+        <Route path="employee/:id/edit" element={<EmployeeUpdate />} />
+        <Route path="employee/:id/delete" element={<EmployeeDelete />} />
 
-      {/* User dashboard */}
-      <Route path="user-dashboard" element={<Dashboard type="user" />}>
-        <Route path="users" element={<h1>Users</h1>} />
-        <Route path="settings" element={<h1>Settings</h1>} />
+        {/* Profiles */}
+        <Route path="profiles-dashboard" element={<Profiles />} />
+        <Route path="profile-create" element={<ProfileCreate />} />
+        <Route path="profile/:id" element={<ProfileDetail />} />
+        <Route path="profile/:id/edit" element={<ProfileUpdate />} />
       </Route>
     </Route>
   </Route>
